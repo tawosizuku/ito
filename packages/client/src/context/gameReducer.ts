@@ -28,6 +28,7 @@ export function gameReducer(state: AppState, action: Action): AppState {
           roomCode: action.roomCode,
           myPlayerId: action.myPlayerId,
           myName: action.myName,
+          hostId: action.myPlayerId,
         },
         ui: { error: null, isLoading: false },
       };
