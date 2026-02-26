@@ -1,0 +1,5 @@
+[build]
+buildCommand = "npm ci --include=dev && npm run build && ls packages/shared/dist/index.js"
+
+[deploy]
+startCommand = "npm start"
