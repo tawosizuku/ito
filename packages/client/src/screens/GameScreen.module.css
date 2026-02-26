@@ -1,0 +1,161 @@
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--space-md);
+  gap: var(--space-md);
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-sm) var(--space-md);
+}
+
+.roundInfo {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.phase {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+  padding: var(--space-lg) 0;
+}
+
+.phaseLabel {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.theme {
+  font-size: var(--font-size-xl);
+  color: var(--color-accent);
+  text-align: center;
+}
+
+.myCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.myCardLabel {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.hint {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  text-align: center;
+  max-width: 320px;
+}
+
+.waiting {
+  color: var(--color-text-dim);
+  font-size: var(--font-size-sm);
+}
+
+.placedCards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  justify-content: center;
+}
+
+.remaining {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: center;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.remainingLabel {
+  font-weight: 600;
+}
+
+.resultBanner {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  padding: var(--space-sm) var(--space-xl);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.success {
+  color: var(--color-success);
+  background: rgba(46, 204, 113, 0.1);
+  border: 2px solid var(--color-success-dim);
+}
+
+.failure {
+  color: var(--color-danger);
+  background: rgba(231, 76, 60, 0.1);
+  border: 2px solid var(--color-danger);
+}
+
+.gameOverBanner {
+  text-align: center;
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
+}
+
+.gameOverBanner h2 {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--space-xs);
+}
+
+.gameOverBanner p {
+  font-size: var(--font-size-base);
+  opacity: 0.8;
+}
+
+.victory {
+  background: linear-gradient(135deg, rgba(212, 168, 67, 0.15), rgba(46, 204, 113, 0.15));
+  color: var(--color-accent);
+}
+
+.defeat {
+  background: rgba(231, 76, 60, 0.1);
+  color: var(--color-danger);
+}
+
+.gameOverActions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+.chatArea {
+  margin-top: auto;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .container {
+    padding: var(--space-sm);
+  }
+}

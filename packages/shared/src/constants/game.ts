@@ -1,0 +1,13 @@
+export const MIN_PLAYERS = 2;
+export const MAX_PLAYERS = 10;
+export const CARD_MIN = 1;
+export const CARD_MAX = 100;
+export const ROOM_CODE_LENGTH = 4;
+export const MIN_LIVES = 1;
+export const MAX_LIVES = 5;
+export const MIN_ROUNDS = 1;
+export const MAX_ROUNDS = 5;
+export const PLAYER_NAME_MAX_LENGTH = 12;
+export const CHAT_MESSAGE_MAX_LENGTH = 200;
+export const RECONNECT_TIMEOUT_MS = 60_000;
+export const ROOM_CLEANUP_INTERVAL_MS = 300_000;

@@ -1,0 +1,82 @@
+.list {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+}
+
+.heading {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.count {
+  background: var(--color-surface-light);
+  padding: 0 var(--space-sm);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+}
+
+.players {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.player {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-sm);
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast);
+}
+
+.player:hover {
+  background: var(--color-surface-light);
+}
+
+.disconnected {
+  opacity: 0.5;
+}
+
+.name {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--font-size-base);
+}
+
+.badges {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.youBadge {
+  font-size: var(--font-size-xs);
+  color: var(--color-accent);
+  background: rgba(212, 168, 67, 0.15);
+  padding: 1px var(--space-sm);
+  border-radius: var(--radius-full);
+}
+
+.hostBadge {
+  font-size: var(--font-size-xs);
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent-dim);
+  padding: 1px var(--space-sm);
+  border-radius: var(--radius-full);
+}
+
+.offlineBadge {
+  font-size: var(--font-size-xs);
+  color: var(--color-danger);
+  border: 1px solid var(--color-danger);
+  padding: 1px var(--space-sm);
+  border-radius: var(--radius-full);
+}

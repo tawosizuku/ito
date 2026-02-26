@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  gap: var(--space-xs);
+  align-items: center;
+}
+
+.heart {
+  font-size: var(--font-size-xl);
+  transition: color var(--transition-base), transform var(--transition-base);
+}
+
+.active {
+  color: var(--color-heart);
+}
+
+.empty {
+  color: var(--color-heart-empty);
+}

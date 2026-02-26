@@ -1,0 +1,119 @@
+.container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: var(--space-lg);
+}
+
+.panel {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: var(--font-size-xl);
+  color: var(--color-accent);
+}
+
+.roomCode {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  padding: var(--space-xs) 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.roomCode strong {
+  color: var(--color-text);
+  font-size: var(--font-size-lg);
+  letter-spacing: 0.15em;
+}
+
+.copyHint {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-dim);
+}
+
+.settings {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+}
+
+.settingsTitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.settingRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) 0;
+}
+
+.settingRow + .settingRow {
+  border-top: 1px solid var(--color-border);
+}
+
+.settingLabel {
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+}
+
+.settingControl {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.optionBtn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-surface-light);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.optionBtn:hover {
+  background: var(--color-surface-hover);
+}
+
+.optionActive {
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border-color: var(--color-accent);
+}
+
+.settingInfo {
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+}
+
+.waitingText {
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  padding: var(--space-sm);
+}

@@ -1,0 +1,120 @@
+.chat {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.collapsed {
+  /* When collapsed, only show header */
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-surface-light);
+  border: none;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+}
+
+.header:hover {
+  background: var(--color-surface-hover);
+}
+
+.badge {
+  background: var(--color-danger);
+  color: #fff;
+  font-size: var(--font-size-xs);
+  padding: 1px 6px;
+  border-radius: var(--radius-full);
+  min-width: 18px;
+  text-align: center;
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  min-height: 120px;
+  max-height: 200px;
+}
+
+.empty {
+  color: var(--color-text-dim);
+  font-size: var(--font-size-sm);
+  text-align: center;
+  padding: var(--space-lg);
+}
+
+.message {
+  font-size: var(--font-size-sm);
+  line-height: 1.4;
+}
+
+.system {
+  color: var(--color-text-dim);
+  font-style: italic;
+  text-align: center;
+  font-size: var(--font-size-xs);
+}
+
+.sender {
+  font-weight: 600;
+  color: var(--color-accent);
+  margin-right: var(--space-sm);
+}
+
+.text {
+  word-break: break-word;
+}
+
+.inputArea {
+  display: flex;
+  border-top: 1px solid var(--color-border);
+}
+
+.input {
+  flex: 1;
+  padding: var(--space-sm) var(--space-md);
+  background: transparent;
+  color: var(--color-text);
+  border: none;
+  font-size: var(--font-size-sm);
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--color-text-dim);
+}
+
+.sendBtn {
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border: none;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.sendBtn:hover:not(:disabled) {
+  background: var(--color-accent-hover);
+}
+
+.sendBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
