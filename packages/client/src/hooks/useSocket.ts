@@ -18,7 +18,14 @@ export function useSocket() {
       const myName = sessionStorage.getItem('ito:myName');
       if (roomCode && myName) {
         socket.emit('room:join', roomCode, myName, (response) => {
-          if (!response.success) {
+          if (response.success && response.playerId) {
+            dispatch({
+              type: 'ROOM_JOINED',
+              roomCode,
+              myPlayerId: response.playerId,
+              myName,
+            });
+          } else {
             // Reconnection failed, clear session
             sessionStorage.removeItem('ito:roomCode');
             sessionStorage.removeItem('ito:myName');
