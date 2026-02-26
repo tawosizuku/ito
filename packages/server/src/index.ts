@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import express from 'express';
 import { createServer } from 'node:http';
 import { Server } from 'socket.io';
@@ -29,7 +30,8 @@ app.get('/health', (_req, res) => {
 });
 
 // Serve client static files
-const clientDistPath = path.join(import.meta.dirname, '../../client/dist');
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const clientDistPath = path.join(__dirname, '../../client/dist');
 app.use(express.static(clientDistPath));
 
 // SPA fallback: serve index.html for non-API routes
