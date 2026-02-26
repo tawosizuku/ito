@@ -11,14 +11,14 @@ export function useGameActions() {
       return new Promise((resolve, reject) => {
         dispatch({ type: 'SET_LOADING', isLoading: true });
         socket.emit('room:create', playerName, (response) => {
-          if (response.success && response.roomCode) {
+          if (response.success && response.roomCode && response.playerId) {
             const roomCode = response.roomCode;
             sessionStorage.setItem('ito:roomCode', roomCode);
             sessionStorage.setItem('ito:myName', playerName);
             dispatch({
               type: 'ROOM_CREATED',
               roomCode,
-              myPlayerId: socket.id!,
+              myPlayerId: response.playerId,
               myName: playerName,
             });
             resolve(roomCode);
@@ -38,13 +38,13 @@ export function useGameActions() {
       return new Promise((resolve, reject) => {
         dispatch({ type: 'SET_LOADING', isLoading: true });
         socket.emit('room:join', roomCode, playerName, (response) => {
-          if (response.success) {
+          if (response.success && response.playerId) {
             sessionStorage.setItem('ito:roomCode', roomCode);
             sessionStorage.setItem('ito:myName', playerName);
             dispatch({
               type: 'ROOM_JOINED',
               roomCode,
-              myPlayerId: socket.id!,
+              myPlayerId: response.playerId,
               myName: playerName,
             });
             resolve();

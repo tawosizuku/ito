@@ -4,8 +4,8 @@ import type { ChatMessage } from './chat.js';
 
 // Client → Server events
 export interface ClientEvents {
-  'room:create': (playerName: string, callback: (response: { success: boolean; roomCode?: string; error?: string }) => void) => void;
-  'room:join': (roomCode: string, playerName: string, callback: (response: { success: boolean; error?: string }) => void) => void;
+  'room:create': (playerName: string, callback: (response: { success: boolean; roomCode?: string; playerId?: string; error?: string }) => void) => void;
+  'room:join': (roomCode: string, playerName: string, callback: (response: { success: boolean; playerId?: string; error?: string }) => void) => void;
   'room:leave': () => void;
   'lobby:updateSettings': (settings: Partial<GameSettings>) => void;
   'lobby:startGame': () => void;

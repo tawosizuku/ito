@@ -34,9 +34,8 @@ export function registerHandlers(
       data.roomCode = room.code;
       data.playerId = playerId;
       socket.join(room.code);
-      callback({ success: true, roomCode: room.code });
+      callback({ success: true, roomCode: room.code, playerId });
 
-      const player = room.players.find((p) => p.id === playerId)!;
       io.to(room.code).emit('lobby:state', {
         players: room.players.map((p) => gameEngine.getClientPlayer(p)),
         settings: room.settings,
@@ -68,7 +67,7 @@ export function registerHandlers(
         socket.to(room.code).emit('room:playerJoined', gameEngine.getClientPlayer(player));
         const sysMsg = chatManager.addSystemMessage(room, `${player.name} が再接続しました`);
         io.to(room.code).emit('chat:newMessage', sysMsg);
-        callback({ success: true });
+        callback({ success: true, playerId });
         return;
       }
 
@@ -89,7 +88,7 @@ export function registerHandlers(
         io.to(room.code).emit('chat:newMessage', sysMsg);
       }
 
-      callback({ success: true });
+      callback({ success: true, playerId });
     });
 
     socket.on('room:leave', () => {
