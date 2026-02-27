@@ -155,12 +155,12 @@ export function registerHandlers(
       io.to(room.code).emit('game:placementStarted');
     });
 
-    socket.on('game:placeCard', () => {
+    socket.on('game:placeCard', (label: string) => {
       if (!data.roomCode || !data.playerId) return;
       const room = roomManager.getRoom(data.roomCode);
       if (!room) return;
 
-      const result = gameEngine.placeCard(room, data.playerId);
+      const result = gameEngine.placeCard(room, data.playerId, label);
       if ('error' in result) {
         socket.emit('error', result.error);
         return;

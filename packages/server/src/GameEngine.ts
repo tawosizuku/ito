@@ -56,6 +56,7 @@ export class GameEngine {
   placeCard(
     room: ServerRoom,
     playerId: string,
+    label: string,
   ): { placed: PlacedCard } | { error: string } {
     if (room.phase !== 'PLACEMENT') return { error: '配置フェーズではありません' };
     if (!room.round) return { error: 'ラウンドが開始されていません' };
@@ -73,6 +74,7 @@ export class GameEngine {
       playerName,
       cardNumber: card.cardNumber,
       order: room.round.placedCards.length + 1,
+      label,
     };
     room.round.placedCards.push(placed);
 

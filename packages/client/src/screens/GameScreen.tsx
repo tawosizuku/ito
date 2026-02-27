@@ -11,6 +11,7 @@ export function GameScreen() {
   const { state } = useGame();
   const { placeCard, reorderCards, confirmOrder, startPlacement, nextRound, playAgain, leaveRoom } = useGameActions();
   const [chatCollapsed, setChatCollapsed] = useState(true);
+  const [cardLabel, setCardLabel] = useState('');
 
   const { game, room } = state;
   const round = game.round;
@@ -72,6 +73,7 @@ export function GameScreen() {
                     key={card.playerId}
                     number={card.cardNumber}
                     playerName={card.playerName}
+                    label={card.label}
                     revealed={false}
                     size="sm"
                   />
@@ -84,7 +86,15 @@ export function GameScreen() {
               <div className={styles.myCard}>
                 <p className={styles.myCardLabel}>あなたのカード</p>
                 <Card number={game.myCard} size="lg" highlight />
-                <Button onClick={placeCard} size="lg">
+                <input
+                  type="text"
+                  className={styles.cardInput}
+                  placeholder="ヒントを入力..."
+                  value={cardLabel}
+                  onChange={(e) => setCardLabel(e.target.value)}
+                  maxLength={20}
+                />
+                <Button onClick={() => { placeCard(cardLabel); setCardLabel(''); }} size="lg">
                   カードを出す
                 </Button>
               </div>
@@ -119,7 +129,10 @@ export function GameScreen() {
                 <div key={card.playerId} className={styles.orderingItem}>
                   <span className={styles.orderNumber}>{index + 1}</span>
                   <span className={styles.orderCardBack}>?</span>
-                  <span className={styles.orderPlayerName}>{card.playerName}</span>
+                  <div className={styles.orderPlayerInfo}>
+                    <span className={styles.orderPlayerName}>{card.playerName}</span>
+                    {card.label && <span className={styles.orderLabel}>{card.label}</span>}
+                  </div>
                   <div className={styles.orderButtons}>
                     <button
                       className={styles.orderBtn}
@@ -176,6 +189,7 @@ export function GameScreen() {
                     key={card.playerId}
                     number={card.cardNumber}
                     playerName={card.playerName}
+                    label={card.label}
                     size="md"
                   />
                 ))}
@@ -215,6 +229,7 @@ export function GameScreen() {
                     key={card.playerId}
                     number={card.cardNumber}
                     playerName={card.playerName}
+                    label={card.label}
                     size="md"
                   />
                 ))}

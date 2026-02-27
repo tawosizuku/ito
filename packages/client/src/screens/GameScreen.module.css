@@ -182,12 +182,26 @@
   text-align: center;
 }
 
+.orderPlayerInfo {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
 .orderPlayerName {
   font-size: var(--font-size-base);
   font-weight: 600;
   color: var(--color-text);
-  flex: 1;
-  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.orderLabel {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  font-style: italic;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -218,6 +232,22 @@
 .orderBtn:disabled {
   opacity: 0.3;
   cursor: not-allowed;
+}
+
+.cardInput {
+  width: 100%;
+  max-width: 200px;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  text-align: center;
+}
+
+.cardInput::placeholder {
+  color: var(--color-text-dim);
 }
 
 .chatArea {

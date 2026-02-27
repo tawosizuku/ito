@@ -10,7 +10,7 @@ export interface ClientEvents {
   'lobby:updateSettings': (settings: Partial<GameSettings>) => void;
   'lobby:startGame': () => void;
   'chat:sendMessage': (text: string) => void;
-  'game:placeCard': () => void;
+  'game:placeCard': (label: string) => void;
   'game:reorderCards': (cardOrder: string[]) => void;
   'game:confirmOrder': () => void;
   'game:nextRound': () => void;

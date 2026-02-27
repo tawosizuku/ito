@@ -78,8 +78,8 @@ export function useGameActions() {
     socket.emit('chat:sendMessage', text);
   }, []);
 
-  const placeCard = useCallback(() => {
-    socket.emit('game:placeCard');
+  const placeCard = useCallback((label: string) => {
+    socket.emit('game:placeCard', label);
     dispatch({ type: 'MY_CARD_PLACED' });
   }, [dispatch]);
 

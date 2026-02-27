@@ -26,6 +26,7 @@ export interface PlacedCard {
   playerName: string;
   cardNumber: number;
   order: number;
+  label: string;
 }
 
 export interface RoundState {
