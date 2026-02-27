@@ -168,31 +168,55 @@ export function registerHandlers(
 
       io.to(room.code).emit('game:cardPlaced', result.placed);
 
-      if (!result.isCorrectOrder) {
-        const lives = gameEngine.loseLife(room);
-        io.to(room.code).emit('game:lifeLost', lives);
+      // When all players have placed, transition to ordering phase
+      if (gameEngine.checkRoundEnd(room)) {
+        const orderResult = gameEngine.startOrdering(room);
+        if (!orderResult.error) {
+          io.to(room.code).emit('game:orderingStarted', room.round!.placedCards);
+        }
+      }
+    });
+
+    socket.on('game:reorderCards', (cardOrder: string[]) => {
+      if (!data.roomCode || !data.playerId) return;
+      const room = roomManager.getRoom(data.roomCode);
+      if (!room) return;
+
+      const result = gameEngine.reorderCards(room, cardOrder);
+      if (result.error) {
+        socket.emit('error', result.error);
+        return;
       }
 
-      if (gameEngine.checkRoundEnd(room)) {
-        const success = gameEngine.isRoundSuccess(room);
-        gameEngine.setRoundResult(room);
+      io.to(room.code).emit('game:cardsReordered', cardOrder);
+    });
 
-        io.to(room.code).emit('game:roundResult', {
-          success,
-          lives: room.lives,
-          placedCards: room.round!.placedCards,
+    socket.on('game:confirmOrder', () => {
+      if (!data.roomCode || !data.playerId) return;
+      const room = roomManager.getRoom(data.roomCode);
+      if (!room) return;
+
+      const result = gameEngine.confirmOrder(room);
+      if ('error' in result) {
+        socket.emit('error', result.error);
+        return;
+      }
+
+      io.to(room.code).emit('game:roundResult', {
+        success: result.success,
+        lives: result.lives,
+        placedCards: result.placedCards,
+      });
+
+      const gameEnd = gameEngine.checkGameEnd(room);
+      if (gameEnd.ended) {
+        io.to(room.code).emit('game:over', {
+          won: gameEnd.won,
+          finalRound: room.currentRound,
         });
-
-        const gameEnd = gameEngine.checkGameEnd(room);
-        if (gameEnd.ended) {
-          io.to(room.code).emit('game:over', {
-            won: gameEnd.won,
-            finalRound: room.currentRound,
-          });
-          const msg = gameEnd.won ? '全ラウンドクリア！おめでとう！' : 'ゲームオーバー...';
-          const sysMsg = chatManager.addSystemMessage(room, msg);
-          io.to(room.code).emit('chat:newMessage', sysMsg);
-        }
+        const msg = gameEnd.won ? '全ラウンドクリア！おめでとう！' : 'ゲームオーバー...';
+        const sysMsg = chatManager.addSystemMessage(room, msg);
+        io.to(room.code).emit('chat:newMessage', sysMsg);
       }
     });
 

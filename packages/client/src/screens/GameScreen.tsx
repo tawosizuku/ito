@@ -9,7 +9,7 @@ import styles from './GameScreen.module.css';
 
 export function GameScreen() {
   const { state } = useGame();
-  const { placeCard, startPlacement, nextRound, playAgain, leaveRoom } = useGameActions();
+  const { placeCard, reorderCards, confirmOrder, startPlacement, nextRound, playAgain, leaveRoom } = useGameActions();
   const [chatCollapsed, setChatCollapsed] = useState(true);
 
   const { game, room } = state;
@@ -64,7 +64,7 @@ export function GameScreen() {
             <p className={styles.phaseLabel}>カード配置中</p>
             <h2 className={styles.theme}>{round?.theme}</h2>
 
-            {/* Placed cards */}
+            {/* Placed cards (face-down during placement) */}
             {round && round.placedCards.length > 0 && (
               <div className={styles.placedCards}>
                 {round.placedCards.map((card) => (
@@ -72,6 +72,7 @@ export function GameScreen() {
                     key={card.playerId}
                     number={card.cardNumber}
                     playerName={card.playerName}
+                    revealed={false}
                     size="sm"
                   />
                 ))}
@@ -100,6 +101,60 @@ export function GameScreen() {
                 <span>{remainingNames.join('、')}</span>
               </div>
             )}
+          </div>
+        )}
+
+        {/* Ordering */}
+        {game.phase === 'ORDERING' && round && (
+          <div className={styles.phase}>
+            <p className={styles.phaseLabel}>カードの並び替え</p>
+            <h2 className={styles.theme}>{round.theme}</h2>
+
+            <p className={styles.hint}>
+              小さい順になるようにカードを並び替えましょう
+            </p>
+
+            <div className={styles.orderingList}>
+              {round.placedCards.map((card, index) => (
+                <div key={card.playerId} className={styles.orderingItem}>
+                  <span className={styles.orderNumber}>{index + 1}</span>
+                  <Card
+                    number={card.cardNumber}
+                    playerName={card.playerName}
+                    revealed={false}
+                    size="sm"
+                  />
+                  <div className={styles.orderButtons}>
+                    <button
+                      className={styles.orderBtn}
+                      disabled={index === 0}
+                      onClick={() => {
+                        const order = round.placedCards.map((c) => c.playerId);
+                        [order[index - 1], order[index]] = [order[index], order[index - 1]];
+                        reorderCards(order);
+                      }}
+                    >
+                      ▲
+                    </button>
+                    <button
+                      className={styles.orderBtn}
+                      disabled={index === round.placedCards.length - 1}
+                      onClick={() => {
+                        const order = round.placedCards.map((c) => c.playerId);
+                        [order[index], order[index + 1]] = [order[index + 1], order[index]];
+                        reorderCards(order);
+                      }}
+                    >
+                      ▼
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <Button onClick={confirmOrder} size="lg">
+              この順番で確定する
+            </Button>
           </div>
         )}
 

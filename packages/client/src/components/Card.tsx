@@ -32,7 +32,10 @@ export function Card({
           {playerName && <span className={styles.name}>{playerName}</span>}
         </>
       ) : (
-        <span className={styles.back}>?</span>
+        <>
+          <span className={styles.back}>?</span>
+          {playerName && <span className={styles.name}>{playerName}</span>}
+        </>
       )}
     </div>
   );

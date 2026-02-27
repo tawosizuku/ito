@@ -56,7 +56,7 @@ export class GameEngine {
   placeCard(
     room: ServerRoom,
     playerId: string,
-  ): { placed: PlacedCard; isCorrectOrder: boolean } | { error: string } {
+  ): { placed: PlacedCard } | { error: string } {
     if (room.phase !== 'PLACEMENT') return { error: '配置フェーズではありません' };
     if (!room.round) return { error: 'ラウンドが開始されていません' };
 
@@ -76,13 +76,51 @@ export class GameEngine {
     };
     room.round.placedCards.push(placed);
 
-    // Check if placed in correct ascending order
-    const lastCard = room.round.placedCards.length >= 2
-      ? room.round.placedCards[room.round.placedCards.length - 2]
-      : null;
-    const isCorrectOrder = !lastCard || placed.cardNumber >= lastCard.cardNumber;
+    return { placed };
+  }
 
-    return { placed, isCorrectOrder };
+  startOrdering(room: ServerRoom): { error?: string } {
+    if (room.phase !== 'PLACEMENT') return { error: '配置フェーズではありません' };
+    room.phase = 'ORDERING';
+    return {};
+  }
+
+  reorderCards(room: ServerRoom, cardOrder: string[]): { error?: string } {
+    if (room.phase !== 'ORDERING') return { error: '並び替えフェーズではありません' };
+    if (!room.round) return { error: 'ラウンドが開始されていません' };
+
+    const reordered: PlacedCard[] = [];
+    for (const playerId of cardOrder) {
+      const card = room.round.placedCards.find((c) => c.playerId === playerId);
+      if (!card) return { error: 'カードが見つかりません' };
+      reordered.push({ ...card, order: reordered.length + 1 });
+    }
+    room.round.placedCards = reordered;
+    return {};
+  }
+
+  confirmOrder(room: ServerRoom): { success: boolean; lives: number; placedCards: PlacedCard[] } | { error: string } {
+    if (room.phase !== 'ORDERING') return { error: '並び替えフェーズではありません' };
+    if (!room.round) return { error: 'ラウンドが開始されていません' };
+
+    // Count inversions (adjacent pairs in wrong order)
+    const placed = room.round.placedCards;
+    let inversions = 0;
+    for (let i = 1; i < placed.length; i++) {
+      if (placed[i].cardNumber < placed[i - 1].cardNumber) {
+        inversions++;
+      }
+    }
+
+    // Lose life for each inversion
+    for (let i = 0; i < inversions; i++) {
+      this.loseLife(room);
+    }
+
+    const success = inversions === 0;
+    this.setRoundResult(room);
+
+    return { success, lives: room.lives, placedCards: placed };
   }
 
   loseLife(room: ServerRoom): number {

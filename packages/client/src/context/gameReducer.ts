@@ -1,3 +1,4 @@
+import type { PlacedCard } from '@ito/shared';
 import type { AppState, Action } from './types';
 import { initialState } from './types';
 
@@ -190,6 +191,36 @@ export function gameReducer(state: AppState, action: Action): AppState {
         ...state,
         game: { ...state.game, lives: action.lives },
       };
+
+    // ─── Ordering ───
+    case 'ORDERING_STARTED':
+      return {
+        ...state,
+        game: {
+          ...state.game,
+          phase: 'ORDERING',
+          round: state.game.round
+            ? { ...state.game.round, placedCards: action.placedCards }
+            : null,
+        },
+      };
+
+    case 'CARDS_REORDERED': {
+      if (!state.game.round) return state;
+      const reordered = action.cardOrder
+        .map((id, i) => {
+          const card = state.game.round!.placedCards.find((c) => c.playerId === id);
+          return card ? { ...card, order: i + 1 } : null;
+        })
+        .filter((c): c is PlacedCard => c !== null);
+      return {
+        ...state,
+        game: {
+          ...state.game,
+          round: { ...state.game.round, placedCards: reordered },
+        },
+      };
+    }
 
     // ─── Results ───
     case 'ROUND_RESULT':

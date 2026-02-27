@@ -11,6 +11,8 @@ export interface ClientEvents {
   'lobby:startGame': () => void;
   'chat:sendMessage': (text: string) => void;
   'game:placeCard': () => void;
+  'game:reorderCards': (cardOrder: string[]) => void;
+  'game:confirmOrder': () => void;
   'game:nextRound': () => void;
   'game:startPlacement': () => void;
   'game:playAgain': () => void;
@@ -29,6 +31,8 @@ export interface ServerEvents {
   'game:discussionStarted': () => void;
   'game:placementStarted': () => void;
   'game:cardPlaced': (card: PlacedCard) => void;
+  'game:orderingStarted': (placedCards: PlacedCard[]) => void;
+  'game:cardsReordered': (cardOrder: string[]) => void;
   'game:lifeLost': (lives: number) => void;
   'game:roundResult': (data: { success: boolean; lives: number; placedCards: PlacedCard[] }) => void;
   'game:over': (data: { won: boolean; finalRound: number }) => void;

@@ -5,6 +5,7 @@ export type GamePhase =
   | 'CARD_DISTRIBUTION'
   | 'DISCUSSION'
   | 'PLACEMENT'
+  | 'ORDERING'
   | 'ROUND_RESULT'
   | 'GAME_OVER';
 

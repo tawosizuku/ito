@@ -106,6 +106,9 @@ export type Action =
   | { type: 'CARD_PLACED'; card: PlacedCard }
   | { type: 'MY_CARD_PLACED' }
   | { type: 'LIFE_LOST'; lives: number }
+  // Ordering
+  | { type: 'ORDERING_STARTED'; placedCards: PlacedCard[] }
+  | { type: 'CARDS_REORDERED'; cardOrder: string[] }
   // Results
   | { type: 'ROUND_RESULT'; success: boolean; lives: number; placedCards: PlacedCard[] }
   | { type: 'GAME_OVER'; won: boolean; finalRound: number }

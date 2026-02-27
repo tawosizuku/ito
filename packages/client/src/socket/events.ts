@@ -55,6 +55,14 @@ export function registerServerEvents(socket: TypedSocket, dispatch: Dispatch<Act
     dispatch({ type: 'CARD_PLACED', card });
   });
 
+  socket.on('game:orderingStarted', (placedCards) => {
+    dispatch({ type: 'ORDERING_STARTED', placedCards });
+  });
+
+  socket.on('game:cardsReordered', (cardOrder) => {
+    dispatch({ type: 'CARDS_REORDERED', cardOrder });
+  });
+
   socket.on('game:lifeLost', (lives) => {
     dispatch({ type: 'LIFE_LOST', lives });
   });
@@ -100,6 +108,8 @@ export function unregisterServerEvents(socket: TypedSocket) {
   socket.off('game:discussionStarted');
   socket.off('game:placementStarted');
   socket.off('game:cardPlaced');
+  socket.off('game:orderingStarted');
+  socket.off('game:cardsReordered');
   socket.off('game:lifeLost');
   socket.off('game:roundResult');
   socket.off('game:over');

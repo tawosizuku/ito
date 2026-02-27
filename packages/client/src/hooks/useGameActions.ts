@@ -83,6 +83,18 @@ export function useGameActions() {
     dispatch({ type: 'MY_CARD_PLACED' });
   }, [dispatch]);
 
+  const reorderCards = useCallback(
+    (cardOrder: string[]) => {
+      socket.emit('game:reorderCards', cardOrder);
+      dispatch({ type: 'CARDS_REORDERED', cardOrder });
+    },
+    [dispatch],
+  );
+
+  const confirmOrder = useCallback(() => {
+    socket.emit('game:confirmOrder');
+  }, []);
+
   const startPlacement = useCallback(() => {
     socket.emit('game:startPlacement');
   }, []);
@@ -107,6 +119,8 @@ export function useGameActions() {
     startGame,
     sendMessage,
     placeCard,
+    reorderCards,
+    confirmOrder,
     startPlacement,
     nextRound,
     playAgain,
