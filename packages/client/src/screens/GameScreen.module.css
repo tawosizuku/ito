@@ -164,7 +164,7 @@
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  padding: var(--space-xs) var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
 }
 
 .orderNumber {
@@ -175,20 +175,38 @@
   text-align: center;
 }
 
+.orderCardBack {
+  font-size: var(--font-size-xl);
+  color: var(--color-text-dim);
+  min-width: 1.5em;
+  text-align: center;
+}
+
+.orderPlayerName {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--color-text);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .orderButtons {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  margin-left: auto;
+  flex-shrink: 0;
 }
 
 .orderBtn {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
-  padding: 2px 8px;
+  padding: 4px 12px;
   cursor: pointer;
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-base);
   color: var(--color-text);
   transition: background 0.15s;
 }

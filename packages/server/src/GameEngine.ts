@@ -189,7 +189,10 @@ export class GameEngine {
         ? {
             roundNumber: room.round.roundNumber,
             theme: room.round.theme,
-            placedCards: room.round.placedCards,
+            placedCards:
+              room.phase === 'PLACEMENT' || room.phase === 'ORDERING'
+                ? room.round.placedCards.map((c) => ({ ...c, cardNumber: 0 }))
+                : room.round.placedCards,
             remainingPlayers: room.round.remainingPlayers,
           }
         : null,

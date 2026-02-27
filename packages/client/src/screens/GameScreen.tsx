@@ -118,12 +118,8 @@ export function GameScreen() {
               {round.placedCards.map((card, index) => (
                 <div key={card.playerId} className={styles.orderingItem}>
                   <span className={styles.orderNumber}>{index + 1}</span>
-                  <Card
-                    number={card.cardNumber}
-                    playerName={card.playerName}
-                    revealed={false}
-                    size="sm"
-                  />
+                  <span className={styles.orderCardBack}>?</span>
+                  <span className={styles.orderPlayerName}>{card.playerName}</span>
                   <div className={styles.orderButtons}>
                     <button
                       className={styles.orderBtn}

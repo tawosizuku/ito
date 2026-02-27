@@ -166,13 +166,16 @@ export function registerHandlers(
         return;
       }
 
-      io.to(room.code).emit('game:cardPlaced', result.placed);
+      // Hide cardNumber from other players during placement
+      const hiddenCard = { ...result.placed, cardNumber: 0 };
+      io.to(room.code).emit('game:cardPlaced', hiddenCard);
 
       // When all players have placed, transition to ordering phase
       if (gameEngine.checkRoundEnd(room)) {
         const orderResult = gameEngine.startOrdering(room);
         if (!orderResult.error) {
-          io.to(room.code).emit('game:orderingStarted', room.round!.placedCards);
+          const hiddenCards = room.round!.placedCards.map((c) => ({ ...c, cardNumber: 0 }));
+          io.to(room.code).emit('game:orderingStarted', hiddenCards);
         }
       }
     });
