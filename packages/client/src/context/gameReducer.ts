@@ -109,6 +109,10 @@ export function gameReducer(state: AppState, action: Action): AppState {
         game: {
           ...state.game,
           phase: 'THEME_ANNOUNCEMENT',
+          lives: state.room.settings.maxLives,
+          maxLives: state.room.settings.maxLives,
+          currentRound: 0,
+          totalRounds: state.room.settings.totalRounds,
           gameResult: null,
           isSuccess: null,
           hasPlacedCard: false,
@@ -122,8 +126,9 @@ export function gameReducer(state: AppState, action: Action): AppState {
         game: {
           ...state.game,
           phase: 'THEME_ANNOUNCEMENT',
+          currentRound: state.game.currentRound + 1,
           round: {
-            roundNumber: state.game.currentRound,
+            roundNumber: state.game.currentRound + 1,
             theme: action.theme,
             placedCards: [],
             remainingPlayers: [],
