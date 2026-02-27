@@ -92,7 +92,6 @@ export function GameScreen() {
                   placeholder="ヒントを入力..."
                   value={cardLabel}
                   onChange={(e) => setCardLabel(e.target.value)}
-                  maxLength={20}
                 />
                 <Button onClick={() => { placeCard(cardLabel); setCardLabel(''); }} size="lg">
                   カードを出す
