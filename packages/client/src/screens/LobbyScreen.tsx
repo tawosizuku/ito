@@ -14,7 +14,6 @@ export function LobbyScreen() {
   const [copied, setCopied] = useState(false);
 
   const { room } = state;
-  const isHost = room.myPlayerId === room.hostId;
   const canStart = room.players.filter((p) => p.isConnected).length >= MIN_PLAYERS;
 
   const handleCopyCode = async () => {
@@ -48,79 +47,62 @@ export function LobbyScreen() {
 
         <PlayerList players={room.players} myPlayerId={room.myPlayerId} />
 
-        {/* Settings - Host only */}
-        {isHost && (
-          <div className={styles.settings}>
-            <h3 className={styles.settingsTitle}>ゲーム設定</h3>
+        {/* Settings */}
+        <div className={styles.settings}>
+          <h3 className={styles.settingsTitle}>ゲーム設定</h3>
 
-            <div className={styles.settingRow}>
-              <label className={styles.settingLabel}>ライフ数</label>
-              <div className={styles.settingControl}>
-                {Array.from({ length: MAX_LIVES - MIN_LIVES + 1 }, (_, i) => i + MIN_LIVES).map(
-                  (n) => (
-                    <button
-                      key={n}
-                      className={[
-                        styles.optionBtn,
-                        room.settings.maxLives === n ? styles.optionActive : '',
-                      ]
-                        .filter(Boolean)
-                        .join(' ')}
-                      onClick={() => updateSettings({ maxLives: n })}
-                      type="button"
-                    >
-                      {n}
-                    </button>
-                  ),
-                )}
-              </div>
-            </div>
-
-            <div className={styles.settingRow}>
-              <label className={styles.settingLabel}>ラウンド数</label>
-              <div className={styles.settingControl}>
-                {Array.from({ length: MAX_ROUNDS - MIN_ROUNDS + 1 }, (_, i) => i + MIN_ROUNDS).map(
-                  (n) => (
-                    <button
-                      key={n}
-                      className={[
-                        styles.optionBtn,
-                        room.settings.totalRounds === n ? styles.optionActive : '',
-                      ]
-                        .filter(Boolean)
-                        .join(' ')}
-                      onClick={() => updateSettings({ totalRounds: n })}
-                      type="button"
-                    >
-                      {n}
-                    </button>
-                  ),
-                )}
-              </div>
+          <div className={styles.settingRow}>
+            <label className={styles.settingLabel}>ライフ数</label>
+            <div className={styles.settingControl}>
+              {Array.from({ length: MAX_LIVES - MIN_LIVES + 1 }, (_, i) => i + MIN_LIVES).map(
+                (n) => (
+                  <button
+                    key={n}
+                    className={[
+                      styles.optionBtn,
+                      room.settings.maxLives === n ? styles.optionActive : '',
+                    ]
+                      .filter(Boolean)
+                      .join(' ')}
+                    onClick={() => updateSettings({ maxLives: n })}
+                    type="button"
+                  >
+                    {n}
+                  </button>
+                ),
+              )}
             </div>
           </div>
-        )}
 
-        {!isHost && (
-          <div className={styles.settings}>
-            <h3 className={styles.settingsTitle}>ゲーム設定</h3>
-            <p className={styles.settingInfo}>
-              ライフ: {room.settings.maxLives} / ラウンド: {room.settings.totalRounds}
-            </p>
+          <div className={styles.settingRow}>
+            <label className={styles.settingLabel}>ラウンド数</label>
+            <div className={styles.settingControl}>
+              {Array.from({ length: MAX_ROUNDS - MIN_ROUNDS + 1 }, (_, i) => i + MIN_ROUNDS).map(
+                (n) => (
+                  <button
+                    key={n}
+                    className={[
+                      styles.optionBtn,
+                      room.settings.totalRounds === n ? styles.optionActive : '',
+                    ]
+                      .filter(Boolean)
+                      .join(' ')}
+                    onClick={() => updateSettings({ totalRounds: n })}
+                    type="button"
+                  >
+                    {n}
+                  </button>
+                ),
+              )}
+            </div>
           </div>
-        )}
+        </div>
 
-        {isHost && (
-          <Button size="lg" onClick={startGame} disabled={!canStart}>
-            {canStart
-              ? 'ゲーム開始'
-              : `あと${MIN_PLAYERS - room.players.filter((p) => p.isConnected).length}人必要`}
-          </Button>
-        )}
-
-        {!isHost && (
-          <p className={styles.waitingText}>ホストがゲームを開始するのを待っています...</p>
-        )}
+        <Button size="lg" onClick={startGame} disabled={!canStart}>
+          {canStart
+            ? 'ゲーム開始'
+            : `あと${MIN_PLAYERS - room.players.filter((p) => p.isConnected).length}人必要`}
+        </Button>
 
         <Chat
           collapsed={chatCollapsed}

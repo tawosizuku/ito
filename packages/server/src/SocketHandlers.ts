@@ -114,10 +114,6 @@ export function registerHandlers(
       if (!data.roomCode || !data.playerId) return;
       const room = roomManager.getRoom(data.roomCode);
       if (!room) return;
-      if (room.hostId !== data.playerId) {
-        socket.emit('error', 'ホストのみゲームを開始できます');
-        return;
-      }
 
       const result = gameEngine.startGame(room);
       if (result.error) {
@@ -150,10 +146,6 @@ export function registerHandlers(
       if (!data.roomCode || !data.playerId) return;
       const room = roomManager.getRoom(data.roomCode);
       if (!room) return;
-      if (room.hostId !== data.playerId) {
-        socket.emit('error', 'ホストのみ配置を開始できます');
-        return;
-      }
 
       const result = gameEngine.startPlacement(room);
       if (result.error) {
@@ -208,10 +200,6 @@ export function registerHandlers(
       if (!data.roomCode || !data.playerId) return;
       const room = roomManager.getRoom(data.roomCode);
       if (!room) return;
-      if (room.hostId !== data.playerId) {
-        socket.emit('error', 'ホストのみ次のラウンドに進めます');
-        return;
-      }
 
       const result = gameEngine.advanceToNextRound(room);
       if (result.error) {
@@ -236,10 +224,6 @@ export function registerHandlers(
       if (!data.roomCode || !data.playerId) return;
       const room = roomManager.getRoom(data.roomCode);
       if (!room) return;
-      if (room.hostId !== data.playerId) {
-        socket.emit('error', 'ホストのみ再プレイできます');
-        return;
-      }
 
       gameEngine.resetForNewGame(room);
       io.to(room.code).emit('lobby:state', {

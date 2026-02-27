@@ -145,7 +145,6 @@ export class RoomManager {
   }
 
   updateSettings(room: ServerRoom, playerId: string, settings: Partial<GameSettings>): { error?: string } {
-    if (room.hostId !== playerId) return { error: 'ホストのみ設定を変更できます' };
     if (room.phase !== 'LOBBY') return { error: 'ロビーでのみ設定を変更できます' };
 
     if (settings.maxLives !== undefined) {

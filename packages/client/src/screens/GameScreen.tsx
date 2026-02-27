@@ -13,7 +13,6 @@ export function GameScreen() {
   const [chatCollapsed, setChatCollapsed] = useState(true);
 
   const { game, room } = state;
-  const isHost = room.myPlayerId === room.hostId;
   const round = game.round;
 
   const remainingNames = round?.remainingPlayers
@@ -53,14 +52,9 @@ export function GameScreen() {
                 : '数字を言わずに、ヒントを出し合いましょう！'}
             </p>
 
-            {isHost && (
-              <Button onClick={startPlacement} size="lg">
-                配置を開始する
-              </Button>
-            )}
-            {!isHost && (
-              <p className={styles.waiting}>ホストが配置開始するのを待っています...</p>
-            )}
+            <Button onClick={startPlacement} size="lg">
+              配置を開始する
+            </Button>
           </div>
         )}
 
@@ -137,14 +131,9 @@ export function GameScreen() {
               </div>
             )}
 
-            {isHost && (
-              <Button onClick={nextRound} size="lg">
-                次のラウンドへ
-              </Button>
-            )}
-            {!isHost && (
-              <p className={styles.waiting}>ホストが次のラウンドを開始するのを待っています...</p>
-            )}
+            <Button onClick={nextRound} size="lg">
+              次のラウンドへ
+            </Button>
           </div>
         )}
 
@@ -182,19 +171,13 @@ export function GameScreen() {
             )}
 
             <div className={styles.gameOverActions}>
-              {isHost && (
-                <Button onClick={playAgain} size="lg">
-                  もう一度遊ぶ
-                </Button>
-              )}
+              <Button onClick={playAgain} size="lg">
+                もう一度遊ぶ
+              </Button>
               <Button variant="secondary" onClick={leaveRoom} size="md">
                 ルームを退出
               </Button>
             </div>
-
-            {!isHost && (
-              <p className={styles.waiting}>ホストが次のゲームを開始するのを待っています...</p>
-            )}
           </div>
         )}
       </div>
